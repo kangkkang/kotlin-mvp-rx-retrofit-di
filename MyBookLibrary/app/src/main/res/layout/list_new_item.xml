@@ -20,7 +20,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/avatar_5_raster"
             app:srcCompat="@drawable/circle"
             tools:background="@tools:sample/avatars"
             tools:srcCompat="@drawable/circle"
@@ -50,9 +49,34 @@
             android:layout_marginStart="8dp"
             android:text="@string/user_points"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/book_image"
             app:layout_constraintTop_toBottomOf="@+id/title_text"
+            tools:text="10,000 pts"
+            android:layout_marginLeft="8dp" />
+
+    <TextView
+            android:id="@+id/isbn13_text"
+            android:layout_width="228dp"
+            android:layout_height="21dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/user_points"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/book_image"
+            app:layout_constraintTop_toBottomOf="@+id/subtitle_text"
+            tools:text="10,000 pts"
+            android:layout_marginLeft="8dp" />
+
+    <TextView
+            android:id="@+id/price_text"
+            android:layout_width="228dp"
+            android:layout_height="21dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/user_points"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/book_image"
+            app:layout_constraintTop_toBottomOf="@+id/isbn13_text"
             tools:text="10,000 pts"
             android:layout_marginLeft="8dp" />
 

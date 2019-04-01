@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
      * Called on first creation and when restoring state.
      */
     private fun setupBottomNavigationBar() {
-        val navGraphIds = listOf(R.navigation.navigation_new, R.navigation.navigation_history, R.navigation.navigation_search)
+        val navGraphIds = listOf(R.navigation.navigation_new, R.navigation.navigation_search, R.navigation.navigation_bookmark, R.navigation.navigation_history)
 
         // Setup the bottom navigation view with a navigation_history of navigation graphs
         val controller = bottomNavigation.setupWithNavController(

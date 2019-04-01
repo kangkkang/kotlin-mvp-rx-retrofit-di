@@ -1,6 +1,8 @@
 package com.h10000b84.android.mybooklibrary.api
 
 import com.h10000b84.android.mybooklibrary.model.Book
+import com.h10000b84.android.mybooklibrary.model.DetailBook
+import com.h10000b84.android.mybooklibrary.model.NewBook
 import com.h10000b84.android.mybooklibrary.util.Constants
 import io.reactivex.Single
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -10,11 +12,11 @@ import retrofit2.http.Path
 
 interface ApiService {
 
-    @GET("books")
-    fun getNewBookList(): Single<List<Book>>
+    @GET("new")
+    fun getNewBookList(): Single<NewBook>
 
     @GET("books/{isbn13}")
-    fun getDetailBook(): Single<Book>
+    fun getDetailBook(@Path("isbn13") isbn13: String): Single<DetailBook>
 
     @GET("search/{query}")
     fun getSearchBook(@Path("query") query: String): Single<List<Book>>

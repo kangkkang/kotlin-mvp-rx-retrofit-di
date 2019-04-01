@@ -1,4 +1,4 @@
-package com.h10000b84.android.mybooklibrary.ui.scene.newscene
+package com.h10000b84.android.mybooklibrary.ui.scene.bookmarkscene
 
 import android.view.LayoutInflater
 import android.view.View
@@ -13,14 +13,14 @@ import com.bumptech.glide.request.RequestOptions
 import com.h10000b84.android.mybooklibrary.R
 import com.h10000b84.android.mybooklibrary.model.Book
 
-class NewListAdapter(fragment: Fragment) : RecyclerView.Adapter<NewListAdapter.ListViewHolder>() {
+class BookmarkListAdapter(fragment: Fragment) : RecyclerView.Adapter<BookmarkListAdapter.ListViewHolder>() {
 
     private val list: MutableList<Book> = mutableListOf()
 
-    private val listener: NewListAdapter.onItemClickListener
+    private val listener: BookmarkListAdapter.onItemClickListener
 
     init {
-        this.listener = fragment as NewListAdapter.onItemClickListener
+        this.listener = fragment as BookmarkListAdapter.onItemClickListener
     }
 
     override fun getItemCount(): Int {
@@ -29,7 +29,7 @@ class NewListAdapter(fragment: Fragment) : RecyclerView.Adapter<NewListAdapter.L
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_new_item, parent, false)
-        return NewListAdapter.ListViewHolder(itemView)
+        return BookmarkListAdapter.ListViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
@@ -67,7 +67,6 @@ class NewListAdapter(fragment: Fragment) : RecyclerView.Adapter<NewListAdapter.L
     }
 
     interface onItemClickListener {
-        fun itemRemoveClick(post: Book)
         fun itemDetail(book: Book)
     }
 }

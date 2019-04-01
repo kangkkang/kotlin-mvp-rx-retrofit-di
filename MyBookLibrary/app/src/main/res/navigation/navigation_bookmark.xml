@@ -19,16 +19,16 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/navigation_new"
-        app:startDestination="@+id/newScreen">
+        android:id="@+id/navigation_bookmark"
+        app:startDestination="@+id/bookmarkScreen">
 
     <fragment
-            android:id="@+id/newScreen"
-            android:name="com.h10000b84.android.mybooklibrary.ui.scene.newscene.NewFragment"
+            android:id="@+id/bookmarkScreen"
+            android:name="com.h10000b84.android.mybooklibrary.ui.scene.bookmarkscene.BookmarkFragment"
             android:label="@string/title_new"
-            tools:layout="@layout/fragment_new">
+            tools:layout="@layout/fragment_bookmark">
         <action
-                android:id="@+id/action_new_to_detail"
+                android:id="@+id/action_bookmark_to_detail"
                 app:destination="@id/detailScreen"/>
     </fragment>
     <fragment

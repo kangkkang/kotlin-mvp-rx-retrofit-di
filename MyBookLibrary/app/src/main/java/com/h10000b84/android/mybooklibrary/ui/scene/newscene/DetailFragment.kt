@@ -5,23 +5,24 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.h10000b84.android.mybooklibrary.R
 import com.h10000b84.android.mybooklibrary.di.component.DaggerFragmentComponent
 import com.h10000b84.android.mybooklibrary.di.module.FragmentModule
-import com.h10000b84.android.mybooklibrary.model.Book
-import kotlinx.android.synthetic.main.fragment_new.*
+import com.h10000b84.android.mybooklibrary.model.DetailBook
+import kotlinx.android.synthetic.main.fragment_detail.*
 import javax.inject.Inject
 
-class NewFragment : Fragment(), NewContract.View, NewListAdapter.onItemClickListener {
+class DetailFragment : Fragment(), DetailContract.View {
+    companion object {
+        const val ARGS_ISBN13 = "isbn13"
+    }
 
     @Inject
-    lateinit var presenter: NewContract.Presenter
+    lateinit var presenter: DetailContract.Presenter
 
-    private var newListAdapter: NewListAdapter? = null
+    private var detailBook: DetailBook? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +30,7 @@ class NewFragment : Fragment(), NewContract.View, NewListAdapter.onItemClickList
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_new, container, false)
+        return inflater.inflate(R.layout.fragment_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,7 +38,12 @@ class NewFragment : Fragment(), NewContract.View, NewListAdapter.onItemClickList
 
         presenter.attach(this)
         presenter.subscribe()
-        initView()
+
+        arguments?.let { presenter.loadData(it.getString(ARGS_ISBN13)) }
+
+        detail_favorite_button.setOnCheckedChangeListener { _, isChecked ->
+            detailBook?.let { presenter.setFavorite(isChecked, it) }
+        }
     }
 
     override fun onDestroyView() {
@@ -53,25 +59,28 @@ class NewFragment : Fragment(), NewContract.View, NewListAdapter.onItemClickList
         }
     }
 
-    override fun showRefreshing(isRefreshing: Boolean) {
-        refreshLayout?.isRefreshing = isRefreshing
-    }
-
     override fun showErrorMessage(error: String) {
         Log.e("Error", error)
     }
 
-    override fun loadDataSuccess(list: List<Book>) {
-        newListAdapter?.addList(list.toMutableList())
-    }
+    override fun loadDataSuccess(detailBook: DetailBook) {
+        this.detailBook = detailBook
 
-    override fun itemRemoveClick(post: Book) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+        detail_title.text = detailBook.title
+        detail_subtitle.text = detailBook.subtitle
 
-    override fun itemDetail(book: Book) {
-        var bundle = bundleOf(DetailFragment.ARGS_ISBN13 to book.isbn13)
-        findNavController().navigate(R.id.action_new_to_detail, bundle)
+        Glide.with(this).load(detailBook.image).into(detail_book_image)
+
+        detail_authors.text = detailBook.authors
+        detail_desc.text = detailBook.desc
+        detail_isbn10.text = detailBook.isbn10
+        detail_isbn13.text = detailBook.isbn13
+        detail_language.text = detailBook.language
+        detail_page.text = detailBook.pages
+        detail_price.text = detailBook.price
+        detail_publisher.text = detailBook.publisher
+        detail_rating.text = detailBook.rating
+        detail_year.text = detailBook.year
     }
 
     private fun injectDependency() {
@@ -80,17 +89,5 @@ class NewFragment : Fragment(), NewContract.View, NewListAdapter.onItemClickList
             .build()
 
         listComponent.inject(this)
-    }
-
-    private fun initView() {
-        newListAdapter = NewListAdapter(this)
-        newListView!!.setLayoutManager(LinearLayoutManager(activity))
-        newListView!!.setAdapter(newListAdapter)
-
-        refreshLayout.setOnRefreshListener {
-            presenter.loadData()
-        }
-
-        presenter.loadData()
     }
 }

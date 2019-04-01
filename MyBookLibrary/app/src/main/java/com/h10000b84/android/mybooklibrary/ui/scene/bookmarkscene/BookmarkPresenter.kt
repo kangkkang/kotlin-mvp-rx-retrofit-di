@@ -1,19 +1,18 @@
-package com.h10000b84.android.mybooklibrary.ui.scene.newscene
+package com.h10000b84.android.mybooklibrary.ui.scene.bookmarkscene
 
-import android.util.Log
 import com.h10000b84.android.mybooklibrary.api.ApiService
 import com.h10000b84.android.mybooklibrary.model.Book
+import com.h10000b84.android.mybooklibrary.model.favoriteList
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class NewPresenter: NewContract.Presenter {
+class BookmarkPresenter: BookmarkContract.Presenter {
 
     private val subscriptions : CompositeDisposable by lazy { CompositeDisposable() }
 
-    private val api: ApiService = ApiService.create()
-    private lateinit var view: NewContract.View
+    private lateinit var view: BookmarkContract.View
 
     override fun subscribe() {
 
@@ -23,20 +22,13 @@ class NewPresenter: NewContract.Presenter {
         subscriptions.clear()
     }
 
-    override fun attach(view: NewContract.View) {
+    override fun attach(view: BookmarkContract.View) {
         this.view = view
     }
 
     override fun loadData() {
-        val subscribe = api.getNewBookList()
+        val subscribe = Single.just(favoriteList)
             .subscribeOn(Schedulers.io())
-            .map {
-                if (it.error.equals("0")) {
-                    it.books
-                } else {
-                    listOf()
-                }
-            }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess {
                 view.showRefreshing(false)
@@ -56,6 +48,6 @@ class NewPresenter: NewContract.Presenter {
     }
 
     override fun deleteItem(item: Book) {
-        //api.deleteUser(item.id)
+        favoriteList.remove(item)
     }
 }

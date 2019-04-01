@@ -1,18 +1,18 @@
 package com.h10000b84.android.mybooklibrary.ui.scene.newscene
 
-import com.h10000b84.android.mybooklibrary.model.Book
+import android.content.Context
+import com.h10000b84.android.mybooklibrary.model.DetailBook
 import com.h10000b84.android.mybooklibrary.ui.base.BaseContract
 
-class NewContract {
+class DetailContract {
     interface View: BaseContract.View {
         fun showProgress(show: Boolean)
-        fun showRefreshing(isRefreshing: Boolean)
         fun showErrorMessage(error: String)
-        fun loadDataSuccess(list: List<Book>)
+        fun loadDataSuccess(detailBook: DetailBook)
     }
 
     interface Presenter: BaseContract.Presenter<View> {
-        fun loadData()
-        fun deleteItem(item: Book)
+        fun loadData(isbn13: String)
+        fun setFavorite(isFavorite: Boolean, book: DetailBook)
     }
 }

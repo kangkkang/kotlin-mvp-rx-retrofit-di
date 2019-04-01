@@ -1,4 +1,4 @@
-package com.h10000b84.android.mybooklibrary.ui.scene.newscene
+package com.h10000b84.android.mybooklibrary.ui.scene.bookmarkscene
 
 import android.os.Bundle
 import android.util.Log
@@ -8,20 +8,24 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.h10000b84.android.mybooklibrary.R
 import com.h10000b84.android.mybooklibrary.di.component.DaggerFragmentComponent
 import com.h10000b84.android.mybooklibrary.di.module.FragmentModule
 import com.h10000b84.android.mybooklibrary.model.Book
-import kotlinx.android.synthetic.main.fragment_new.*
+import com.h10000b84.android.mybooklibrary.ui.scene.newscene.DetailFragment
+import com.h10000b84.android.mybooklibrary.ui.util.SwipeToDelete
+import kotlinx.android.synthetic.main.fragment_bookmark.*
 import javax.inject.Inject
 
-class NewFragment : Fragment(), NewContract.View, NewListAdapter.onItemClickListener {
+class BookmarkFragment : Fragment(), BookmarkContract.View, BookmarkListAdapter.onItemClickListener {
 
     @Inject
-    lateinit var presenter: NewContract.Presenter
+    lateinit var presenter: BookmarkContract.Presenter
 
-    private var newListAdapter: NewListAdapter? = null
+    private var bookmarkListAdapter: BookmarkListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +33,7 @@ class NewFragment : Fragment(), NewContract.View, NewListAdapter.onItemClickList
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_new, container, false)
+        return inflater.inflate(R.layout.fragment_bookmark, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,16 +66,24 @@ class NewFragment : Fragment(), NewContract.View, NewListAdapter.onItemClickList
     }
 
     override fun loadDataSuccess(list: List<Book>) {
-        newListAdapter?.addList(list.toMutableList())
-    }
+        bookmarkListAdapter?.addList(list.toMutableList())
 
-    override fun itemRemoveClick(post: Book) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.context?.let {
+            val swipeHandler = object : SwipeToDelete(it) {
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val adapter = bookmarkListView.adapter as BookmarkListAdapter
+                    adapter.removeAt(viewHolder.adapterPosition)
+                }
+            }
+
+            val itemTouchHelper = ItemTouchHelper(swipeHandler)
+            itemTouchHelper.attachToRecyclerView(bookmarkListView)
+        }
     }
 
     override fun itemDetail(book: Book) {
         var bundle = bundleOf(DetailFragment.ARGS_ISBN13 to book.isbn13)
-        findNavController().navigate(R.id.action_new_to_detail, bundle)
+        findNavController().navigate(R.id.action_bookmark_to_detail, bundle)
     }
 
     private fun injectDependency() {
@@ -83,9 +95,9 @@ class NewFragment : Fragment(), NewContract.View, NewListAdapter.onItemClickList
     }
 
     private fun initView() {
-        newListAdapter = NewListAdapter(this)
-        newListView!!.setLayoutManager(LinearLayoutManager(activity))
-        newListView!!.setAdapter(newListAdapter)
+        bookmarkListAdapter = BookmarkListAdapter(this)
+        bookmarkListView!!.setLayoutManager(LinearLayoutManager(activity))
+        bookmarkListView!!.setAdapter(bookmarkListAdapter)
 
         refreshLayout.setOnRefreshListener {
             presenter.loadData()
