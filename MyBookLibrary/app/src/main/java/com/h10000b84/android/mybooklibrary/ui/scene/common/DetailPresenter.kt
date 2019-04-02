@@ -1,7 +1,5 @@
-package com.h10000b84.android.mybooklibrary.ui.scene.newscene
+package com.h10000b84.android.mybooklibrary.ui.scene.common
 
-import android.app.Activity
-import android.content.Context
 import android.util.Log
 import com.h10000b84.android.mybooklibrary.api.ApiService
 import com.h10000b84.android.mybooklibrary.model.Book

@@ -21,7 +21,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.h10000b84.android.mybooklibrary.ui.scene.newscene.DetailFragment"
+        tools:context="com.h10000b84.android.mybooklibrary.ui.scene.common.DetailFragment"
         tools:layout_editor_absoluteY="81dp">
 
     <ProgressBar

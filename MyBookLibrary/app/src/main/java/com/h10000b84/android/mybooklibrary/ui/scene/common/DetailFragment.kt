@@ -1,4 +1,4 @@
-package com.h10000b84.android.mybooklibrary.ui.scene.newscene
+package com.h10000b84.android.mybooklibrary.ui.scene.common
 
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +11,7 @@ import com.h10000b84.android.mybooklibrary.R
 import com.h10000b84.android.mybooklibrary.di.component.DaggerFragmentComponent
 import com.h10000b84.android.mybooklibrary.di.module.FragmentModule
 import com.h10000b84.android.mybooklibrary.model.DetailBook
+import com.h10000b84.android.mybooklibrary.model.historyList
 import kotlinx.android.synthetic.main.fragment_detail.*
 import javax.inject.Inject
 
@@ -81,6 +82,7 @@ class DetailFragment : Fragment(), DetailContract.View {
         detail_publisher.text = detailBook.publisher
         detail_rating.text = detailBook.rating
         detail_year.text = detailBook.year
+
     }
 
     private fun injectDependency() {

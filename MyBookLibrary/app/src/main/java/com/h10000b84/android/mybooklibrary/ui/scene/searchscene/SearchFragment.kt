@@ -1,4 +1,4 @@
-package com.h10000b84.android.mybooklibrary.ui.scene.newscene
+package com.h10000b84.android.mybooklibrary.ui.scene.searchscene
 
 import android.os.Bundle
 import android.util.Log
@@ -14,15 +14,18 @@ import com.h10000b84.android.mybooklibrary.di.component.DaggerFragmentComponent
 import com.h10000b84.android.mybooklibrary.di.module.FragmentModule
 import com.h10000b84.android.mybooklibrary.model.Book
 import com.h10000b84.android.mybooklibrary.ui.scene.common.DetailFragment
-import kotlinx.android.synthetic.main.fragment_new.*
+import com.jakewharton.rxbinding2.view.clicks
+import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.android.synthetic.main.fragment_search.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class NewFragment : Fragment(), NewContract.View, NewListAdapter.onItemClickListener {
+class SearchFragment : Fragment(), SearchContract.View, SearchListAdapter.onItemClickListener {
 
     @Inject
-    lateinit var presenter: NewContract.Presenter
+    lateinit var presenter: SearchContract.Presenter
 
-    private var newListAdapter: NewListAdapter? = null
+    private var searchListAdapter: SearchListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +33,7 @@ class NewFragment : Fragment(), NewContract.View, NewListAdapter.onItemClickList
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_new, container, false)
+        return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,25 +57,17 @@ class NewFragment : Fragment(), NewContract.View, NewListAdapter.onItemClickList
         }
     }
 
-    override fun showRefreshing(isRefreshing: Boolean) {
-        refreshLayout?.isRefreshing = isRefreshing
-    }
-
     override fun showErrorMessage(error: String) {
         Log.e("Error", error)
     }
 
     override fun loadDataSuccess(list: List<Book>) {
-        newListAdapter?.addList(list.toMutableList())
-    }
-
-    override fun itemRemoveClick(post: Book) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        searchListAdapter?.addList(list.toMutableList())
     }
 
     override fun itemDetail(book: Book) {
         var bundle = bundleOf(DetailFragment.ARGS_ISBN13 to book.isbn13)
-        findNavController().navigate(R.id.action_new_to_detail, bundle)
+        findNavController().navigate(R.id.action_search_to_detail, bundle)
     }
 
     private fun injectDependency() {
@@ -84,14 +79,16 @@ class NewFragment : Fragment(), NewContract.View, NewListAdapter.onItemClickList
     }
 
     private fun initView() {
-        newListAdapter = NewListAdapter(this)
-        newListView!!.setLayoutManager(LinearLayoutManager(activity))
-        newListView!!.setAdapter(newListAdapter)
+        searchListAdapter = SearchListAdapter(this)
+        searchListView!!.setLayoutManager(LinearLayoutManager(activity))
+        searchListView!!.setAdapter(searchListAdapter)
 
-        refreshLayout.setOnRefreshListener {
-            presenter.loadData()
-        }
-
-        presenter.loadData()
+        searchButton.clicks()
+            .throttleFirst(
+                500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread()
+            )
+            .filter { inputKeyword?.text?.isNotEmpty() ?: false }
+            .subscribe { presenter.searchData(inputKeyword.text.toString()) }
+            .apply { presenter.addDisposable(this) }
     }
 }

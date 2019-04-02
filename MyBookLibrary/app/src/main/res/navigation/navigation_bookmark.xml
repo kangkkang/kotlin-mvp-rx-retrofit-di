@@ -33,7 +33,7 @@
     </fragment>
     <fragment
             android:id="@+id/detailScreen"
-            android:name="com.h10000b84.android.mybooklibrary.ui.scene.newscene.DetailFragment"
+            android:name="com.h10000b84.android.mybooklibrary.ui.scene.common.DetailFragment"
             android:label="@string/title_detail"
             tools:layout="@layout/fragment_detail"/>
 </navigation>

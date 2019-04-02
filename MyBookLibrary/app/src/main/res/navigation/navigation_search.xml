@@ -4,20 +4,20 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/navigation_search"
-        app:startDestination="@id/register">
+        app:startDestination="@id/searchScreen">
 
     <fragment
-            android:id="@+id/register"
-            android:name="com.h10000b84.android.mybooklibrary.ui.scene.searchscene.Register"
+            android:id="@+id/searchScreen"
+            android:name="com.h10000b84.android.mybooklibrary.ui.scene.searchscene.SearchFragment"
             android:label="@string/title_register"
-            tools:layout="@layout/fragment_register">
+            tools:layout="@layout/fragment_search">
         <action
-                android:id="@+id/action_register_to_registered"
-                app:destination="@id/registered"/>
+                android:id="@+id/action_search_to_detail"
+                app:destination="@id/detailScreen"/>
     </fragment>
     <fragment
-            android:id="@+id/registered"
-            android:name="com.h10000b84.android.mybooklibrary.ui.scene.searchscene.Registered"
-            android:label="Registered"
-            tools:layout="@layout/fragment_registered"/>
+            android:id="@+id/detailScreen"
+            android:name="com.h10000b84.android.mybooklibrary.ui.scene.common.DetailFragment"
+            android:label="@string/title_detail"
+            tools:layout="@layout/fragment_detail"/>
 </navigation>

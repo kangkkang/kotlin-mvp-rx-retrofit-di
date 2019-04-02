@@ -19,10 +19,10 @@ interface ApiService {
     fun getDetailBook(@Path("isbn13") isbn13: String): Single<DetailBook>
 
     @GET("search/{query}")
-    fun getSearchBook(@Path("query") query: String): Single<List<Book>>
+    fun getSearchBook(@Path("query") query: String): Single<NewBook>
 
     @GET("search/{query}/{page}")
-    fun getSearchBook(@Path("query") query: String, @Path("page") page: Int): Single<List<Book>>
+    fun getSearchBook(@Path("query") query: String, @Path("page") page: Int): Single<NewBook>
 
     companion object Factory {
         fun create(): ApiService {

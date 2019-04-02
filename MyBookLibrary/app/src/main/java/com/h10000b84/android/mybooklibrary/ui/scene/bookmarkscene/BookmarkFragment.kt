@@ -15,7 +15,7 @@ import com.h10000b84.android.mybooklibrary.R
 import com.h10000b84.android.mybooklibrary.di.component.DaggerFragmentComponent
 import com.h10000b84.android.mybooklibrary.di.module.FragmentModule
 import com.h10000b84.android.mybooklibrary.model.Book
-import com.h10000b84.android.mybooklibrary.ui.scene.newscene.DetailFragment
+import com.h10000b84.android.mybooklibrary.ui.scene.common.DetailFragment
 import com.h10000b84.android.mybooklibrary.ui.util.SwipeToDelete
 import kotlinx.android.synthetic.main.fragment_bookmark.*
 import javax.inject.Inject

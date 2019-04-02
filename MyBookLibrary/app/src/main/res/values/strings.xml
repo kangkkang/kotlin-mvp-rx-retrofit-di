@@ -10,6 +10,10 @@
     <string name="favorite_off">bookmark on</string>
     <string name="favorite_on">bookmark off</string>
 
+    <string name="input_keyword_hint">Input Book Keyword</string>
+    <string name="search">Search</string>
+    <string name="notResult">No Result</string>
+
     <string name="select_an_avatar">Select an Avatar</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
