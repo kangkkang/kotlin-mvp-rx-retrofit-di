@@ -9,7 +9,7 @@
     <fragment
             android:id="@+id/searchScreen"
             android:name="com.h10000b84.android.mybooklibrary.ui.scene.searchscene.SearchFragment"
-            android:label="@string/title_register"
+            android:label="@string/title_search"
             tools:layout="@layout/fragment_search">
         <action
                 android:id="@+id/action_search_to_detail"

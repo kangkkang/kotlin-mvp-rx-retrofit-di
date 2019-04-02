@@ -34,11 +34,4 @@
     <string name="about_description">This sample showcases navigation using a Bottom Navigation</string>
     <string name="done">Done</string>
 
-    <string name="title_home">Home</string>
-    <string name="title_register">Register</string>
-    <string name="title_registered">Registered</string>
-    <string name="title_list">Leaderboard</string>
-    <string name="cd_home">Home</string>
-    <string name="cd_list">List</string>
-    <string name="cd_form">Form</string>
 </resources>

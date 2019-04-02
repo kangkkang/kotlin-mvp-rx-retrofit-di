@@ -20,28 +20,20 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/navigation_history"
-        app:startDestination="@+id/history">
+        app:startDestination="@+id/historyScreen">
 
     <fragment
-            android:id="@+id/history"
-            android:name="com.h10000b84.android.mybooklibrary.ui.scene.historyscene.History"
-            android:label="@string/title_list"
+            android:id="@+id/historyScreen"
+            android:name="com.h10000b84.android.mybooklibrary.ui.scene.historyscene.HistoryFragment"
+            android:label="@string/title_history"
             tools:layout="@layout/fragment_history">
         <action
-                android:id="@+id/action_history_to_userProfile"
-                app:destination="@id/userProfile"/>
+                android:id="@+id/action_history_to_detail"
+                app:destination="@id/detailScreen"/>
     </fragment>
     <fragment
-            android:id="@+id/userProfile"
-            android:name="com.h10000b84.android.mybooklibrary.ui.scene.historyscene.UserProfile"
+            android:id="@+id/detailScreen"
+            android:name="com.h10000b84.android.mybooklibrary.ui.scene.common.DetailFragment"
             android:label="@string/title_detail"
-            tools:layout="@layout/fragment_user_profile">
-        <deepLink
-                android:id="@+id/deepLink"
-                app:uri="www.example.com/user/{userName}"
-                android:autoVerify="true"/>
-        <argument
-                android:name="userName"
-                app:argType="string"/>
-    </fragment>
+            tools:layout="@layout/fragment_detail"/>
 </navigation>

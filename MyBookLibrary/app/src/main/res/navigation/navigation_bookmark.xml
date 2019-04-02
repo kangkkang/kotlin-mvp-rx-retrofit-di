@@ -25,7 +25,7 @@
     <fragment
             android:id="@+id/bookmarkScreen"
             android:name="com.h10000b84.android.mybooklibrary.ui.scene.bookmarkscene.BookmarkFragment"
-            android:label="@string/title_new"
+            android:label="@string/title_bookmark"
             tools:layout="@layout/fragment_bookmark">
         <action
                 android:id="@+id/action_bookmark_to_detail"
