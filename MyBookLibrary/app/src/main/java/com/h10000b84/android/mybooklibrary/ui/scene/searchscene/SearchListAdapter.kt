@@ -46,10 +46,19 @@ class SearchListAdapter(fragment: Fragment) : RecyclerView.Adapter<SearchListAda
         }
     }
 
-    fun addList(list: MutableList<Book>) {
+    fun setList(list: MutableList<Book>) {
         this.list.clear()
         this.list.addAll(list)
         notifyDataSetChanged()
+    }
+
+    fun addList(list: MutableList<Book>) {
+        this.list.addAll(list)
+        notifyDataSetChanged()
+    }
+
+    fun getList(): List<Book> {
+        return this.list
     }
 
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

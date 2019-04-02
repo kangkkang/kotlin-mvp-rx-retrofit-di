@@ -5,15 +5,6 @@
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
                                                    tools:context="com.h10000b84.android.mybooklibrary.ui.scene.newscene.NewFragment">
-    <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/historyListView"
@@ -26,4 +17,13 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/list_new_item"/>
 
+    <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

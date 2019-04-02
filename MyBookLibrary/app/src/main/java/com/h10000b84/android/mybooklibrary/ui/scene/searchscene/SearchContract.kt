@@ -9,10 +9,14 @@ class SearchContract {
         fun showProgress(show: Boolean)
         fun showErrorMessage(error: String)
         fun loadDataSuccess(list: List<Book>)
+        fun loadNextPageSuccess(list: List<Book>)
     }
 
     interface Presenter: BaseContract.Presenter<View> {
         fun addDisposable(d: Disposable)
         fun searchData(query: String)
+        fun loadNextPage()
+        fun loadData()
+        fun saveList(list: List<Book>)
     }
 }

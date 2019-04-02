@@ -9,16 +9,19 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.h10000b84.android.mybooklibrary.R
 import com.h10000b84.android.mybooklibrary.di.component.DaggerFragmentComponent
 import com.h10000b84.android.mybooklibrary.di.module.FragmentModule
 import com.h10000b84.android.mybooklibrary.model.Book
 import com.h10000b84.android.mybooklibrary.ui.scene.common.DetailFragment
+import com.h10000b84.android.mybooklibrary.util.Constants
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_search.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+
 
 class SearchFragment : Fragment(), SearchContract.View, SearchListAdapter.onItemClickListener {
 
@@ -62,11 +65,17 @@ class SearchFragment : Fragment(), SearchContract.View, SearchListAdapter.onItem
     }
 
     override fun loadDataSuccess(list: List<Book>) {
+        searchListAdapter?.setList(list.toMutableList())
+    }
+
+    override fun loadNextPageSuccess(list: List<Book>) {
         searchListAdapter?.addList(list.toMutableList())
     }
 
     override fun itemDetail(book: Book) {
-        var bundle = bundleOf(DetailFragment.ARGS_ISBN13 to book.isbn13)
+        searchListAdapter?.let { presenter.saveList(it.getList()) }
+
+        val bundle = bundleOf(DetailFragment.ARGS_ISBN13 to book.isbn13)
         findNavController().navigate(R.id.action_search_to_detail, bundle)
     }
 
@@ -83,6 +92,23 @@ class SearchFragment : Fragment(), SearchContract.View, SearchListAdapter.onItem
         searchListView!!.setLayoutManager(LinearLayoutManager(activity))
         searchListView!!.setAdapter(searchListAdapter)
 
+        searchListView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val visibleItemCount = recyclerView.layoutManager!!.childCount
+                val totalItemCount = recyclerView.layoutManager!!.itemCount
+                val firstVisibleItemPosition =
+                    (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+
+                if (visibleItemCount + firstVisibleItemPosition >= totalItemCount - Constants.PAGINATION_MARGIN
+                    && firstVisibleItemPosition >= 0
+                    && totalItemCount >= Constants.PAGE_SIZE
+                ) {
+                    presenter.loadNextPage()
+                }
+            }
+        })
+
         searchButton.clicks()
             .throttleFirst(
                 500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread()
@@ -90,5 +116,7 @@ class SearchFragment : Fragment(), SearchContract.View, SearchListAdapter.onItem
             .filter { inputKeyword?.text?.isNotEmpty() ?: false }
             .subscribe { presenter.searchData(inputKeyword.text.toString()) }
             .apply { presenter.addDisposable(this) }
+
+        presenter.loadData()
     }
 }

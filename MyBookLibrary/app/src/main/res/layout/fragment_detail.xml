@@ -24,16 +24,6 @@
         tools:context="com.h10000b84.android.mybooklibrary.ui.scene.common.DetailFragment"
         tools:layout_editor_absoluteY="81dp">
 
-    <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -269,4 +259,13 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
+    <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
