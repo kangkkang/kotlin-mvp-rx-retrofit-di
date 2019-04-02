@@ -82,7 +82,6 @@ class DetailFragment : Fragment(), DetailContract.View {
         detail_publisher.text = detailBook.publisher
         detail_rating.text = detailBook.rating
         detail_year.text = detailBook.year
-
     }
 
     private fun injectDependency() {

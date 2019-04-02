@@ -1,7 +1,6 @@
 package com.h10000b84.android.mybooklibrary.ui.scene.historyscene
 
 import com.h10000b84.android.mybooklibrary.model.Book
-import com.h10000b84.android.mybooklibrary.model.favoriteList
 import com.h10000b84.android.mybooklibrary.model.historyList
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -45,7 +44,9 @@ class HistoryPresenter : HistoryContract.Presenter {
         subscriptions.add(subscribe)
     }
 
-    override fun deleteItem(item: Book) {
-        historyList.remove(item)
+    override fun deleteItem(book: Book) {
+        historyList.any { b -> b.isbn13.equals(book.isbn13) }.let {
+            if (it) historyList.remove(book)
+        }
     }
 }

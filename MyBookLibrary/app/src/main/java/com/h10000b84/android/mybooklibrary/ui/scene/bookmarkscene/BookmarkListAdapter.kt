@@ -52,9 +52,11 @@ class BookmarkListAdapter(fragment: Fragment) : RecyclerView.Adapter<BookmarkLis
         notifyDataSetChanged()
     }
 
-    fun removeAt(position: Int) {
-        list.removeAt(position)
+    fun removeAt(position: Int): Book {
+        val book = list.removeAt(position)
         notifyItemRemoved(position)
+
+        return book
     }
 
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

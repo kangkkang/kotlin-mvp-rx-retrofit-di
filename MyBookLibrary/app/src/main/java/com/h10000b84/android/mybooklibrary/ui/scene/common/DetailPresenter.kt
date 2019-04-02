@@ -5,6 +5,7 @@ import com.h10000b84.android.mybooklibrary.api.ApiService
 import com.h10000b84.android.mybooklibrary.model.Book
 import com.h10000b84.android.mybooklibrary.model.DetailBook
 import com.h10000b84.android.mybooklibrary.model.favoriteList
+import com.h10000b84.android.mybooklibrary.model.historyList
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -39,6 +40,10 @@ class DetailPresenter: DetailContract.Presenter {
                 view.showProgress(false)
             }
             .subscribe({ detailBook: DetailBook? ->
+                historyList.any { book -> book.isbn13.equals(detailBook?.isbn13) }.let {
+                    if (!it) historyList.add(Book(detailBook!!.title, detailBook!!.subtitle, detailBook!!.isbn13, detailBook!!.price, detailBook!!.image, detailBook!!.url))
+                }
+
                 view.loadDataSuccess(detailBook!!)
             }, { error ->
                 view.showErrorMessage(error.localizedMessage)
@@ -48,7 +53,10 @@ class DetailPresenter: DetailContract.Presenter {
     }
 
     override fun setFavorite(isFavorite: Boolean, book: DetailBook) {
-        favoriteList.add(Book(book.title, book.subtitle, book.isbn13, book.price, book.image, book.url))
+        favoriteList.any { b -> b.isbn13.equals(book.isbn13) }.let {
+            if (!it) favoriteList.add(Book(book.title, book.subtitle, book.isbn13, book.price, book.image, book.url))
+        }
+
         Log.e("tag", "add favroriri ${favoriteList.size}")
     }
 }

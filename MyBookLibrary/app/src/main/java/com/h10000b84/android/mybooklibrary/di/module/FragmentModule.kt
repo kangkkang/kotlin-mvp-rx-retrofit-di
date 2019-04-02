@@ -5,6 +5,8 @@ import com.h10000b84.android.mybooklibrary.ui.scene.bookmarkscene.BookmarkContra
 import com.h10000b84.android.mybooklibrary.ui.scene.bookmarkscene.BookmarkPresenter
 import com.h10000b84.android.mybooklibrary.ui.scene.common.DetailContract
 import com.h10000b84.android.mybooklibrary.ui.scene.common.DetailPresenter
+import com.h10000b84.android.mybooklibrary.ui.scene.historyscene.HistoryContract
+import com.h10000b84.android.mybooklibrary.ui.scene.historyscene.HistoryPresenter
 import com.h10000b84.android.mybooklibrary.ui.scene.newscene.NewContract
 import com.h10000b84.android.mybooklibrary.ui.scene.newscene.NewPresenter
 import com.h10000b84.android.mybooklibrary.ui.scene.searchscene.SearchContract
@@ -32,6 +34,11 @@ class FragmentModule {
     @Provides
     fun provideSearchPresenter(): SearchContract.Presenter {
         return SearchPresenter()
+    }
+
+    @Provides
+    fun provideHistoryPresenter(): HistoryContract.Presenter {
+        return HistoryPresenter()
     }
 
     @Provides

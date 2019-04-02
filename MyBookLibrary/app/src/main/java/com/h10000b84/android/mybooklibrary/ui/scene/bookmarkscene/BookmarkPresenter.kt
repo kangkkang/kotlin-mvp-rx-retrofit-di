@@ -47,7 +47,9 @@ class BookmarkPresenter: BookmarkContract.Presenter {
         subscriptions.add(subscribe)
     }
 
-    override fun deleteItem(item: Book) {
-        favoriteList.remove(item)
+    override fun deleteItem(book: Book) {
+        favoriteList.any { b -> b.isbn13.equals(book.isbn13) }.let {
+            if (it) favoriteList.remove(book)
+        }
     }
 }

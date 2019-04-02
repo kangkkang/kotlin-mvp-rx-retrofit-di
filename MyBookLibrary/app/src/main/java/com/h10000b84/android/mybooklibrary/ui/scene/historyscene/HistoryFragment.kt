@@ -68,7 +68,7 @@ class HistoryFragment : Fragment(), HistoryContract.View, HistoryListAdapter.onI
             val swipeHandler = object : SwipeToDelete(it) {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val adapter = historyListView.adapter as HistoryListAdapter
-                    adapter.removeAt(viewHolder.adapterPosition)
+                    presenter.deleteItem(adapter.removeAt(viewHolder.adapterPosition))
                 }
             }
 

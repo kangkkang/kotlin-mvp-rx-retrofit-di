@@ -72,7 +72,7 @@ class BookmarkFragment : Fragment(), BookmarkContract.View, BookmarkListAdapter.
             val swipeHandler = object : SwipeToDelete(it) {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val adapter = bookmarkListView.adapter as BookmarkListAdapter
-                    adapter.removeAt(viewHolder.adapterPosition)
+                    presenter.deleteItem(adapter.removeAt(viewHolder.adapterPosition))
                 }
             }
 
