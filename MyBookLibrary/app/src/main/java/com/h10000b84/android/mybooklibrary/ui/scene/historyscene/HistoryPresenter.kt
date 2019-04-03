@@ -2,10 +2,11 @@ package com.h10000b84.android.mybooklibrary.ui.scene.historyscene
 
 import com.h10000b84.android.mybooklibrary.model.Book
 import com.h10000b84.android.mybooklibrary.model.historyList
+import com.h10000b84.android.mybooklibrary.util.androidThread
+import com.h10000b84.android.mybooklibrary.util.ioThread
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 
 class HistoryPresenter : HistoryContract.Presenter {
 
@@ -27,8 +28,8 @@ class HistoryPresenter : HistoryContract.Presenter {
 
     override fun loadData() {
         val subscribe = Single.just(historyList)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(ioThread())
+            .observeOn(androidThread())
             .doOnSuccess {
                 view.showProgress(false)
             }

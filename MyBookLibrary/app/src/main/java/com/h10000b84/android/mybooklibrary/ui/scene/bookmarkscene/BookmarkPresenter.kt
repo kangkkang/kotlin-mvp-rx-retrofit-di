@@ -3,6 +3,8 @@ package com.h10000b84.android.mybooklibrary.ui.scene.bookmarkscene
 import com.h10000b84.android.mybooklibrary.api.ApiService
 import com.h10000b84.android.mybooklibrary.model.Book
 import com.h10000b84.android.mybooklibrary.model.favoriteList
+import com.h10000b84.android.mybooklibrary.util.androidThread
+import com.h10000b84.android.mybooklibrary.util.ioThread
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -28,8 +30,8 @@ class BookmarkPresenter: BookmarkContract.Presenter {
 
     override fun loadData() {
         val subscribe = Single.just(favoriteList)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(ioThread())
+            .observeOn(androidThread())
             .doOnSuccess {
                 view.showRefreshing(false)
                 view.showProgress(false)

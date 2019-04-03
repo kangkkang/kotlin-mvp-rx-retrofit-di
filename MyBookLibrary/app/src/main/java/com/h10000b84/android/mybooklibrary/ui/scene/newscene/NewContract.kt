@@ -13,6 +13,5 @@ class NewContract {
 
     interface Presenter: BaseContract.Presenter<View> {
         fun loadData()
-        fun deleteItem(item: Book)
     }
 }

@@ -3,11 +3,11 @@ package com.h10000b84.android.mybooklibrary.ui.scene.searchscene
 import com.h10000b84.android.mybooklibrary.api.ApiService
 import com.h10000b84.android.mybooklibrary.model.Book
 import com.h10000b84.android.mybooklibrary.model.searchList
+import com.h10000b84.android.mybooklibrary.util.androidThread
+import com.h10000b84.android.mybooklibrary.util.ioThread
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 
 class SearchPresenter: SearchContract.Presenter {
 
@@ -38,7 +38,7 @@ class SearchPresenter: SearchContract.Presenter {
         this.query = query
 
         val subscribe = api.getSearchBook(query)
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(ioThread())
             .map {
                 if (it.error.equals("0")) {
                     it.books
@@ -46,7 +46,7 @@ class SearchPresenter: SearchContract.Presenter {
                     listOf()
                 }
             }
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(androidThread())
             .doOnSubscribe {
                 view.showProgress(true)
             }
@@ -73,7 +73,7 @@ class SearchPresenter: SearchContract.Presenter {
         currentPage++
 
         val subscribe = api.getSearchBook(query, currentPage)
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(ioThread())
             .map {
                 if (it.error.equals("0")) {
                     it.books
@@ -81,7 +81,7 @@ class SearchPresenter: SearchContract.Presenter {
                     listOf()
                 }
             }
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(androidThread())
             .doOnSubscribe {
                 view.showProgress(true)
             }
@@ -112,8 +112,8 @@ class SearchPresenter: SearchContract.Presenter {
         }
 
         val subscribe = Single.just(searchList)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(ioThread())
+            .observeOn(androidThread())
             .doOnSuccess {
                 view.showProgress(false)
             }

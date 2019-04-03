@@ -6,6 +6,8 @@ import com.h10000b84.android.mybooklibrary.model.Book
 import com.h10000b84.android.mybooklibrary.model.DetailBook
 import com.h10000b84.android.mybooklibrary.model.favoriteList
 import com.h10000b84.android.mybooklibrary.model.historyList
+import com.h10000b84.android.mybooklibrary.util.androidThread
+import com.h10000b84.android.mybooklibrary.util.ioThread
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -31,8 +33,8 @@ class DetailPresenter: DetailContract.Presenter {
 
     override fun loadData(isbn13: String) {
         val subscribe = api.getDetailBook(isbn13)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(ioThread())
+            .observeOn(androidThread())
             .doOnSuccess {
                 view.showProgress(false)
             }

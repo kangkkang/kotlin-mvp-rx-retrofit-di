@@ -1,9 +1,9 @@
 package com.h10000b84.android.mybooklibrary.ui.scene.newscene
 
-import android.util.Log
 import com.h10000b84.android.mybooklibrary.api.ApiService
 import com.h10000b84.android.mybooklibrary.model.Book
-import io.reactivex.Single
+import com.h10000b84.android.mybooklibrary.util.androidThread
+import com.h10000b84.android.mybooklibrary.util.ioThread
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -29,7 +29,7 @@ class NewPresenter: NewContract.Presenter {
 
     override fun loadData() {
         val subscribe = api.getNewBookList()
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(ioThread())
             .map {
                 if (it.error.equals("0")) {
                     it.books
@@ -37,7 +37,7 @@ class NewPresenter: NewContract.Presenter {
                     listOf()
                 }
             }
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(androidThread())
             .doOnSuccess {
                 view.showRefreshing(false)
                 view.showProgress(false)
@@ -53,9 +53,5 @@ class NewPresenter: NewContract.Presenter {
             })
 
         subscriptions.add(subscribe)
-    }
-
-    override fun deleteItem(item: Book) {
-        //api.deleteUser(item.id)
     }
 }

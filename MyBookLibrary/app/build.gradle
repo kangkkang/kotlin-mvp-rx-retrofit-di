@@ -28,12 +28,16 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     implementation deps.kotlin.stdlib
-    implementation deps.support.vectordrawable
     implementation deps.support.app_compat
     implementation deps.support.design
     implementation deps.support.core_ktx
@@ -68,6 +72,9 @@ dependencies {
 
     // Glide
     implementation deps.glide.runtime
+
+    testImplementation deps.junit
+    testImplementation deps.mockito.core
 
     // Android Testing Support Library's runner and rules
     androidTestImplementation deps.atsl.runner
