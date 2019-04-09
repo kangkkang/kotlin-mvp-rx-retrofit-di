@@ -42,9 +42,7 @@ class DetailFragment : Fragment(), DetailContract.View {
 
         arguments?.let { presenter.loadData(it.getString(ARGS_ISBN13)) }
 
-        detail_favorite_button.setOnCheckedChangeListener { _, isChecked ->
-            detailBook?.let { presenter.setFavorite(isChecked, it) }
-        }
+        detail_favorite_button.visibility = View.INVISIBLE
     }
 
     override fun onDestroyView() {
@@ -82,6 +80,14 @@ class DetailFragment : Fragment(), DetailContract.View {
         detail_publisher.text = detailBook.publisher
         detail_rating.text = detailBook.rating
         detail_year.text = detailBook.year
+
+        detail_favorite_button.visibility = View.VISIBLE
+
+        detail_favorite_button.setOnCheckedChangeListener(null)
+        detail_favorite_button.isChecked = presenter.checkFavorite(detailBook)
+        detail_favorite_button.setOnCheckedChangeListener { _, isChecked ->
+            detailBook.let { presenter.setFavorite(isChecked, it) }
+        }
     }
 
     private fun injectDependency() {

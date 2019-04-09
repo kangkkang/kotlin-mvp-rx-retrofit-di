@@ -57,8 +57,13 @@ class DetailPresenter: DetailContract.Presenter {
     override fun setFavorite(isFavorite: Boolean, book: DetailBook) {
         favoriteList.any { b -> b.isbn13.equals(book.isbn13) }.let {
             if (!it) favoriteList.add(Book(book.title, book.subtitle, book.isbn13, book.price, book.image, book.url))
+            else favoriteList.remove(Book(book.title, book.subtitle, book.isbn13, book.price, book.image, book.url))
         }
 
-        Log.e("tag", "add favroriri ${favoriteList.size}")
+        Log.e("tag", "setFavorite ${favoriteList.size}")
+    }
+
+    override fun checkFavorite(book: DetailBook): Boolean {
+        return favoriteList.any { b -> b.isbn13.equals(book.isbn13) }
     }
 }

@@ -82,7 +82,7 @@ class BookmarkFragment : Fragment(), BookmarkContract.View, BookmarkListAdapter.
     }
 
     override fun itemDetail(book: Book) {
-        var bundle = bundleOf(DetailFragment.ARGS_ISBN13 to book.isbn13)
+        val bundle = bundleOf(DetailFragment.ARGS_ISBN13 to book.isbn13)
         findNavController().navigate(R.id.action_bookmark_to_detail, bundle)
     }
 

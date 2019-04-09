@@ -13,5 +13,6 @@ class DetailContract {
     interface Presenter: BaseContract.Presenter<View> {
         fun loadData(isbn13: String)
         fun setFavorite(isFavorite: Boolean, book: DetailBook)
+        fun checkFavorite(detailBook: DetailBook): Boolean
     }
 }
